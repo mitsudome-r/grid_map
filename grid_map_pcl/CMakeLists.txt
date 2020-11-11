@@ -7,7 +7,7 @@ find_package(grid_map_cmake_helpers REQUIRED)
 find_package(grid_map_core REQUIRED)
 find_package(grid_map_msgs REQUIRED)
 find_package(grid_map_ros REQUIRED)
-find_package(pcl_ros REQUIRED)
+find_package(PCL REQUIRED COMPONENTS io search kdtree filters segmentation)
 find_package(rclcpp REQUIRED)
 find_package(rcutils REQUIRED)
 
@@ -31,7 +31,6 @@ set(dependencies
   grid_map_core
   grid_map_msgs
   grid_map_ros
-  pcl_ros
   rclcpp
   rcutils
 )
@@ -46,15 +45,16 @@ include_directories(
   SYSTEM
     ${EIGEN3_INCLUDE_DIR}
     ${OpenMP_CXX_INCLUDE_DIRS}
+    ${PCL_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
 add_library(${PROJECT_NAME} SHARED
   ${SRC_FILES}
 )
-
 target_link_libraries(${PROJECT_NAME}
   ${OpenMP_CXX_LIBRARIES}
+  ${PCL_LIBRARIES}
   yaml-cpp
 )
 
